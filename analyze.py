@@ -49,5 +49,17 @@ path2="data/COL211_device2_postdielelectric_FET_2016_05_28_1322.csv"
 data1=np.loadtxt(fname=path1,skiprows=1,delimiter=',')
 data2=np.loadtxt(fname=path2,skiprows=1,delimiter=',')
 
-make_linlog_figure(data1,os.path.basename(path1)[:6])
-plt.show()
+# make_linlog_figure(data1,os.path.basename(path1)[:6])
+
+paths=os.listdir("data")
+# print len(paths)
+
+fig=plt.figure(figsize=(5,5*len(paths)))
+axis=[0]*len(paths)
+for i in range(len(paths)):
+    data=np.loadtxt(fname=os.path.join("data",paths[i]),skiprows=1,delimiter=',')
+    axis[i]=plt.subplot(len(paths),1,i+1)
+    plotupdown(axis[i],data[:,0],data[:,2])
+
+
+fig.savefig("plots/test", format="jpg")
